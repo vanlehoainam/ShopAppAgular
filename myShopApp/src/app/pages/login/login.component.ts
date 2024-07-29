@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-login',
@@ -20,9 +22,12 @@ export class LoginComponent {
   onLogin() {
     // Gửi yêu cầu POST đến URL API
     const url = `https://localhost:8080/api/User/login?emailorusername=${encodeURIComponent(this.logiObj.emailorusername)}&password=${encodeURIComponent(this.logiObj.password)}`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     this.http.post<any>(url, this.logiObj).subscribe((res: any) => {
-      if (res.result) {
+
+      if (res.data) {
+
         alert("Login success!");
         localStorage.setItem("token", res.data.token);
         this.router.navigate(['/dashboard']);
