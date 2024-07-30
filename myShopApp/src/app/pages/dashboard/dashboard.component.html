@@ -33,25 +33,24 @@
                 <th>Username</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>Actions</th> <!-- New: Column for actions -->
-            </tr>
+                <th>Actions</th>
         </thead>
         <tbody>
             <tr *ngFor="let user of userList">
                 <td>{{ user.id }}</td>
                 <td>{{ user.fullName }}</td>
-                <td>{{ user.username }}</td>
+                <td>{{ user.userName }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.phone }}</td>
                 <td>
-                    <button (click)="editUser(user)">Edit</button> <!-- New: Edit button -->
-                    <button (click)="deleteUser(user.id)">Delete</button> <!-- New: Delete button -->
+                    <button (click)="editUser(user)">Edit</button>
+                    <button (click)="deleteUser(user.id)">Delete</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <div *ngIf="editingUserId !== null"> <!-- New: Form for editing user details -->
+    <div *ngIf="editingUserId !== null">
         <h3>Edit User</h3>
         <form [formGroup]="editForm" (ngSubmit)="saveUser()">
             <label for="fullName">Full Name:</label>
@@ -63,7 +62,7 @@
             <label for="phone">Phone:</label>
             <input id="phone" formControlName="phone" />
             <button type="submit">Save</button>
-            <button type="button" (click)="editingUserId = null">Cancel</button> <!-- New: Cancel button -->
+            <button type="button" (click)="editingUserId = null">Cancel</button>
         </form>
     </div>
 </div>
