@@ -32,18 +32,27 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms'; //
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
+<<<<<<< HEAD
   // standalone:true,
   // imports: [JsonPipe],
+=======
+  //standalone:true,
+  //imports: [JsonPipe],
+>>>>>>> f2353261042e40421b9a036a0ee91cfd4e4173db
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
 
   http = inject(HttpClient);
+<<<<<<< HEAD
   fb = inject(FormBuilder); // New: Inject FormBuilder
 
   userList: any[] = [];
   editForm: FormGroup; // New: Form group for editing user details
   editingUserId: number | null = null; // New: Track which user is being edited
+=======
+  userList: any[] = [];
+>>>>>>> f2353261042e40421b9a036a0ee91cfd4e4173db
 
   ngOnInit(): void {
     this.getAllUser();
@@ -59,6 +68,7 @@ export class DashboardComponent implements OnInit {
   getAllUser() {
     this.http.get("https://localhost:8080/api/User/GetAll").subscribe((Res: any) => {
       this.userList = Res.data;
+<<<<<<< HEAD
     });
   }
 
@@ -88,6 +98,9 @@ export class DashboardComponent implements OnInit {
     this.http.delete(`https://localhost:8080/api/User/Delete/${id}`).subscribe(() => {
       this.getAllUser();
     });
+=======
+    })
+>>>>>>> f2353261042e40421b9a036a0ee91cfd4e4173db
   }
 }
 
