@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -8,34 +8,46 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  http = inject(HttpClient);
-  fb = inject(FormBuilder);
-
   userList: any[] = [];
+  createForm!: FormGroup;
   editForm!: FormGroup;
   editingUserId: number | null = null;
+  showForm = false;
+
+  constructor(private http: HttpClient, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.getAllUser();
+    this.initializeForms();
+  }
+
+  initializeForms() {
+    this.createForm = this.fb.group({
+      fullName: ['', Validators.required],
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      role: ['', Validators.required],
+      phone: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(8)]]
+    });
+
     this.editForm = this.fb.group({
       fullName: ['', Validators.required],
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      Role: ['', Validators.required],
-      phone: ['', Validators.required]
+      role: ['', Validators.required],
+      phone: ['', Validators.required],
+      password: ['', [Validators.minLength(8)]]
     });
   }
 
   getAllUser() {
     this.http.get("https://localhost:8080/api/User/GetAll").subscribe(
       (res: any) => {
-        console.log('Phản hồi API:', res);
         this.userList = res.$values;
-        console.log('Danh sách người dùng:', this.userList);
       },
       (error) => {
-        console.error('Đã xảy ra lỗi:', error);
+        console.error('Error occurred:', error);
       }
     );
   }
@@ -46,17 +58,35 @@ export class DashboardComponent implements OnInit {
       fullName: user.fullName,
       username: user.userName,
       email: user.email,
-      Role: user.Role,
-      phone: user.phone
+      role: user.role,
+      phone: user.phone,
+      password: user.password
     });
+    this.showForm = true;
+  }
+
+  createUser() {
+    if (this.createForm.valid) {
+      this.http.post('https://localhost:8080/api/User/Create', this.createForm.value).subscribe(
+        () => {
+          this.getAllUser();
+          this.cancel();
+        },
+        (error) => {
+          console.error('Error occurred:', error);
+        }
+      );
+    }
   }
 
   saveUser() {
-    if (this.editingUserId !== null) {
-      this.http.put(`https://localhost:8080/api/User/Update?Id=${this.editingUserId}`, this.editForm.value).subscribe(
+    if (this.editForm.valid && this.editingUserId !== null) {
+      const editFormValue = { ...this.editForm.value };
+
+      this.http.put(`https://localhost:8080/api/User/Update?Id=${this.editingUserId}`, editFormValue).subscribe(
         () => {
           this.getAllUser();
-          this.editingUserId = null;
+          this.cancel();
         },
         (error) => {
           console.error('Error occurred:', error);
@@ -74,5 +104,17 @@ export class DashboardComponent implements OnInit {
         console.error('Error occurred:', error);
       }
     );
+  }
+
+  showCreateForm() {
+    this.editingUserId = null;
+    this.showForm = true;
+  }
+
+  cancel() {
+    this.showForm = false;
+    this.editForm.reset();
+    this.createForm.reset();
+    this.editingUserId = null;
   }
 }

@@ -1,0 +1,29 @@
+<div class="register-container">
+    <div class="register-form">
+        <h2>Register</h2>
+        <form (ngSubmit)="onRegister()">
+            <div class="form-group">
+                <input type="text" placeholder="Full name" [(ngModel)]="registerObj.fullname" name="fullname" required>
+            </div>
+            <div class="form-group">
+                <input type="text" placeholder="Username" [(ngModel)]="registerObj.username" name="username" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Email" [(ngModel)]="registerObj.email" name="email" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" placeholder="Phone" [(ngModel)]="registerObj.phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Password" [(ngModel)]="registerObj.password" name="password"
+                    required>
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Confirm Password" [(ngModel)]="registerObj.confirmPassword"
+                    name="confirmPassword" required>
+            </div>
+            <button type="submit">REGISTER NOW</button>
+        </form>
+        <p>Already have an account? <a class="link" routerLink="/login">Login here</a></p>
+    </div>
+</div>
