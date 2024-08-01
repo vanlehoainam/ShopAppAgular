@@ -4,6 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LayoutComponent } from './pages/layout/layout.component';
+import { HomeComponent } from './pages/home/home.component';
 
 
 const routes: Routes = [{
@@ -22,6 +23,16 @@ const routes: Routes = [{
     {
       path: 'dashboard',
       component: DashboardComponent
+    }
+  ]
+},
+{
+  path: '',
+  component: LayoutComponent,
+  children: [
+    {
+      path: 'home',
+      component: HomeComponent
     }
   ]
 },
