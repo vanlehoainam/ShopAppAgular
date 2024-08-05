@@ -1,1 +1,42 @@
-<p>product works!</p>
+<!-- src/app/pages/product/product.component.html -->
+<div>
+    <h2>Product Management</h2>
+
+    <form [FormGroup]="productForm" (ngSubmit)="saveProduct()">
+        <input type="hidden" formControlName="id" />
+        <div>
+            <label>Name:</label>
+            <input formControlName="name" required />
+        </div>
+        <div>
+            <label>Price:</label>
+            <input type="number" formControlName="price" required />
+        </div>
+        <div>
+            <label>Image URL:</label>
+            <input formControlName="img" />
+        </div>
+        <div>
+            <label>Quantity:</label>
+            <input type="number" formControlName="quantity" required />
+        </div>
+        <div>
+            <label>Description:</label>
+            <textarea formControlName="description"></textarea>
+        </div>
+        <div>
+            <label>Note:</label>
+            <textarea formControlName="note"></textarea>
+        </div>
+        <button type="submit">{{ editingProductId ? 'Update' : 'Add' }} Product</button>
+    </form>
+
+    <!-- Product List -->
+    <ul>
+        <li *ngFor="let product of productList">
+            {{ product.name }} - {{ product.price }}
+            <button (click)="editProduct(product)">Edit</button>
+            <button (click)="deleteProduct(product.id)">Delete</button>
+        </li>
+    </ul>
+</div>

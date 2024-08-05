@@ -1,1 +1,16 @@
-<p>home works!</p>
+<h1>Danh sách sản phẩm</h1>
+<div *ngIf="spList.length > 0; else noProducts">
+    <ul>
+        <li *ngFor="let product of spList">
+            <h2>{{ product.ten_SP }}</h2>
+            <p>Giá: {{ product.gia | currency }}</p>
+            <p>Mô tả: {{ product.moTa }}</p>
+            <p>Số lượng: {{ product.soLuong }}</p>
+            <img *ngIf="product.anh_SP" [src]="product.anh_SP" alt="{{ product.ten_SP }}" />
+            <p *ngIf="product.ghiChu">Ghi chú: {{ product.ghiChu }}</p>
+        </li>
+    </ul>
+</div>
+<ng-template #noProducts>
+    <p>Không có sản phẩm nào.</p>
+</ng-template>

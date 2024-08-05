@@ -28,7 +28,7 @@ import { HomeComponent } from './pages/home/home.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-  
+
   ],
   providers: [],
   bootstrap: [AppComponent]
