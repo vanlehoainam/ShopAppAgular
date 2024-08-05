@@ -1,16 +1,27 @@
+<!-- src/app/pages/home/home.component.html -->
 <h1>Danh sách sản phẩm</h1>
-<div *ngIf="spList.length > 0; else noProducts">
-    <ul>
-        <li *ngFor="let product of spList">
-            <h2>{{ product.ten_SP }}</h2>
-            <p>Giá: {{ product.gia | currency }}</p>
-            <p>Mô tả: {{ product.moTa }}</p>
-            <p>Số lượng: {{ product.soLuong }}</p>
-            <img *ngIf="product.anh_SP" [src]="product.anh_SP" alt="{{ product.ten_SP }}" />
-            <p *ngIf="product.ghiChu">Ghi chú: {{ product.ghiChu }}</p>
-        </li>
-    </ul>
+<div class="product-container">
+    <div *ngIf="spList.length > 0; else noProducts">
+        <div class="product-grid">
+            <div class="product-card" *ngFor="let product of spList">
+                <div class="card">
+                    <img *ngIf="product.anh_SP" [src]="product.anh_SP" class="card-img-top" alt="{{ product.ten_SP }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.ten_SP }}</h5>
+                        <p class="card-text">Giá: {{ product.gia | currency }}</p>
+                        <p class="card-text">Mô tả: {{ product.moTa }}</p>
+                        <p class="card-text">Số lượng: {{ product.soLuong }}</p>
+                        <p class="card-text" *ngIf="product.ghiChu">Ghi chú: {{ product.ghiChu }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary">Mua ngay</button>
+                        <button class="btn btn-secondary">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #noProducts>
+        <p>Không có sản phẩm nào.</p>
+    </ng-template>
 </div>
-<ng-template #noProducts>
-    <p>Không có sản phẩm nào.</p>
-</ng-template>

@@ -10,6 +10,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
+import { AdminComponent } from './pages/product/product.component'
+
+
 
 
 
@@ -20,7 +23,9 @@ import { HomeComponent } from './pages/home/home.component';
     LayoutComponent,
     DashboardComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    AdminComponent
+
   ],
   imports: [
     BrowserModule,

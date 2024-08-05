@@ -1,17 +1,15 @@
-// src/app/pages/admin/admin.component.ts
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 
 @Component({
   selector: 'app-admin',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnInit {
+export class AdminComponent implements OnInit {
   productList: any[] = [];
-  t5productForm!: FormGroup;
+  productForm!: FormGroup;
   editingProductId: number | null = null;
 
   constructor(private http: HttpClient, private fb: FormBuilder) { }
@@ -36,7 +34,12 @@ export class ProductComponent implements OnInit {
   getAllProducts() {
     this.http.get("https://localhost:8080/api/Product/GetAll").subscribe(
       (res: any) => {
-        this.productList = res.$values;
+        this.productList = res.$values.map((product: any) => {
+          if (product.anh_SP) {
+            product.anh_SP = 'https://localhost:8080/data/images' + product.anh_SP.split('\\').pop();
+          }
+          return product;
+        });
       },
       (error) => {
         console.error('Error occurred:', error);

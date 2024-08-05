@@ -14,7 +14,6 @@ export class RegisterComponent {
     username: "",
     email: "",
     phone: "",
-    role: "",
     password: "",
     confirmPassword: ""
   };
@@ -28,7 +27,7 @@ export class RegisterComponent {
       return;
     }
 
-    const url = 'https://localhost:8080/api/User/Create';
+    const url = 'https://localhost:8080/api/User/register';
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     this.http.post<any>(url, this.registerObj, { headers }).subscribe(

@@ -2,15 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-interface SanPham {
-  maSP: number;
-  ten_SP: string;
-  gia: number;
-  anh_SP: string;
-  soLuong: number;
-  moTa: string;
-  ghiChu?: string;
-}
 
 @Component({
   selector: 'app-home',
@@ -18,11 +9,7 @@ interface SanPham {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  spList: SanPham[] = [];
-  createForm!: FormGroup;
-  editForm!: FormGroup;
-  editingProductId: number | null = null;
-  showForm = false;
+  spList: any[] = [];
 
   constructor(private http: HttpClient, private fb: FormBuilder) { }
 
@@ -33,14 +20,18 @@ export class HomeComponent implements OnInit {
 
 
   getAllSP() {
-    this.http.get<SanPham[]>("https://localhost:8080/api/SanPham/GetAll").subscribe(
-      (res) => {
-        this.spList = res;
+    this.http.get("https://localhost:8080/api/SanPham/GetAll").subscribe(
+      (res: any) => {
+        this.spList = res.$values.map((product: any) => {
+          if (product.anh_SP) {
+            product.anh_SP = 'https://localhost:8080/data/images' + product.anh_SP.split('\\').pop();
+          }
+          return product;
+        });
       },
       (error) => {
-        console.error('Đã xảy ra lỗi:', error);
+        console.error('Error occurred:', error);
       }
     );
   }
-
 }
